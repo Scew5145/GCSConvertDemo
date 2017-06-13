@@ -1,5 +1,5 @@
 {
-  "name": "gcsConvertTest",
+  "name": "gcs-convert-test",
   "description": "A quick demo for automatic conversion of webm files to mp4 using ffmpeg libraries. (FB -> Google Cloud)",
   "dependencies": {
     "@google-cloud/storage": "^0.4.0",
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "private": true,  
+  "private": true,
   "semistandard": {
     "globals": [
       "after",
@@ -25,12 +25,6 @@
       "describe",
       "it"
     ]
-  },
-  "devDependencies": {
-    "ava": "~0.19.1",
-    "nodejs-repo-tools": "git+https://git@github.com/GoogleCloudPlatform/nodejs-repo-tools.git",
-    "supertest": "~3.0.0",
-    "tap-dot": "~1.0.5"
   },
   "engines": {
     "node": ">=4.3.2"
