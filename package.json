@@ -1,5 +1,5 @@
 {
-  "name": "gcs-convert-test",
+  "name": "videoconvertgcdemo",
   "description": "A quick demo for automatic conversion of webm files to mp4 using ffmpeg libraries. (FB -> Google Cloud)",
   "repository": "https://github.com/Scew5145/GCSConvertDemo",
   "dependencies": {
