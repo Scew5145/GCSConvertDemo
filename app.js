@@ -10,8 +10,9 @@ const ffmpeg_static = require('ffmpeg-static');
 const app = express();
 console.log('Cloud Server Started! Probably.')
 
-app.get('/', (req, res) => {
-    res.status(200).send("These are some words that I'm sending to the user.")
+app.get('/*.webm', (req, res) => {
+    addr = req.originalUrl
+    res.status(200).send(`Address: ${addr}.`)
 });
 
 
