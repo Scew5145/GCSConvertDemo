@@ -9,13 +9,31 @@
     "mkdirp-promise": "^4.0.0",
     "bluebird": "^3.5.0",
     "ffmpeg-static": "^2.0.0",
-    "fluent-ffmpeg":"^2.1.2"
+    "fluent-ffmpeg":"^2.1.2",
+    "express": "~4.15.2"
   },
   "scripts": {
     "start": "node app.js"
   },
-  "private": true,
+  "private": true,  
+  "semistandard": {
+    "globals": [
+      "after",
+      "afterEach",
+      "before",
+      "beforeEach",
+      "describe",
+      "it"
+    ]
+  },
+  "devDependencies": {
+    "ava": "~0.19.1",
+    "nodejs-repo-tools": "git+https://git@github.com/GoogleCloudPlatform/nodejs-repo-tools.git",
+    "supertest": "~3.0.0",
+    "tap-dot": "~1.0.5"
+  },
   "engines": {
     "node": ">=4.3.2"
   }
 }
+
