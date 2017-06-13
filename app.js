@@ -1,6 +1,6 @@
-var gcloud = require('google-cloud')({
+/*var gcloud = require('google-cloud')({
   projectId: 'videoconvertgcdemo'
-});
+});*/
 const functions = require('firebase-functions');
 const mkdirp = require('mkdirp-promise');
 const gcs = require('@google-cloud/storage')();
