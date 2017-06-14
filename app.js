@@ -11,6 +11,7 @@ const app = express();
 
 app.get('/*.webm', (req, res) => {
     addr = req.originalUrl
+    console.log("Got a request!")
     res.status(200).send(`Address: ${addr}.`)
 });
 
