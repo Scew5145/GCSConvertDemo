@@ -11,13 +11,17 @@ const app = express();
 const MP4_EXTENSION = 'mp4'
 const TEMP_LOCAL_FOLDER = '/tmp/'
 
+
 app.get('/*.webm', (req, res) => {
     console.log("Got a request!")
     //Parse request file address
+
     const filePathSplit = req.originalUrl.split('/');
+    filePathSplit.shift()
+    const filePath = filePathSplit.join('/')
     const fileName = filePathSplit.pop();
     const fileNameSplit = fileName.split('.');
-    fileNameSplit.shift()
+
     const fileExtension = fileNameSplit.pop();
     const baseFileName = fileNameSplit.join('.');
     const fileDir = filePathSplit.join('/') + (filePathSplit.length > 0 ? '/' : '');
