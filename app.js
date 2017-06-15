@@ -28,10 +28,12 @@ app.get('/*.webm', (req, res) => {
     const tempLocalMP4File = `${TEMP_LOCAL_FOLDER}${MP4FilePath}`;
 
     //Make the temp directory
+    res.status(200).send(`0`)
     return mkdirp(tempLocalDir).then(() => {
         console.log('Directory Created')
         //Download item from bucket
         const bucket = gcs.bucket('videoconvertgcdemo.appspot.com');
+        console.log('Grabbed bucket. Downloading file.')
         return bucket.file(filePath).download({destination: tempLocalFile}).then(() => {
             console.log('file downloaded to convert. Location:', tempLocalFile)
             cmd = ffmpeg({source:tempLocalFile})
@@ -50,7 +52,6 @@ app.get('/*.webm', (req, res) => {
                     destination: MP4FilePath
                 }).then(() => {
                     console.log('mp4 uploaded at', filePath);
-                    res.status(200).send(`0`)
                 });
             })
         });
