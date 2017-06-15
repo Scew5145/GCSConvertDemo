@@ -27,14 +27,15 @@ exports.webm_to_mp4_requestor = functions.storage.object().onChange(event => {
     }
 
     //Set up the GET request to the app
-    const appUrl = "https://8081-dot-2416846-dot-devshell.appspot.com/"
+    const appUrl = "https://videoconvertgcdemo.appspot.com/"
     const fullUrl = `${appUrl}${filePath}`
     console.log(fullUrl)
     return request({
             url: `${fullUrl}`,
-            method: 'POST'
+            method: 'GET'
         }).then(function(res) {
-            console.log(res.statusCode);
+            console.log(res);
+            console.log("finished")
         }).catch(function(error) {
             console.log(error.message);
         });

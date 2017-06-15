@@ -8,12 +8,56 @@ const ffmpeg_static = require('ffmpeg-static');
 
 
 const app = express();
+const MP4_EXTENSION = 'mp4'
+const TEMP_LOCAL_FOLDER = '/tmp/'
 
 app.get('/*.webm', (req, res) => {
-    addr = req.originalUrl
     console.log("Got a request!")
-    res.status(200).send(`Address: ${addr}.`)
+    //Parse request file address
+    const filePathSplit = req.originalUrl.split('/');
+    const fileName = filePathSplit.pop();
+    const fileNameSplit = fileName.split('.');
+    fileNameSplit.shift()
+    const fileExtension = fileNameSplit.pop();
+    const baseFileName = fileNameSplit.join('.');
+    const fileDir = filePathSplit.join('/') + (filePathSplit.length > 0 ? '/' : '');
+
+    const MP4FilePath = `${fileDir}${baseFileName}.${MP4_EXTENSION}`;
+    const tempLocalDir = `${TEMP_LOCAL_FOLDER}${fileDir}`;
+    const tempLocalFile = `${tempLocalDir}${fileName}`;
+    const tempLocalMP4File = `${TEMP_LOCAL_FOLDER}${MP4FilePath}`;
+
+    //Make the temp directory
+    return mkdirp(tempLocalDir).then(() => {
+        console.log('Directory Created')
+        //Download item from bucket
+        const bucket = gcs.bucket(object.bucket);
+        return bucket.file(filePath).download({destination: tempLocalFile}).then(() => {
+            console.log('file downloaded to convert. Location:', tempLocalFile)
+            cmd = ffmpeg({source:tempLocalFile})
+            .setFfmpegPath(ffmpeg_static.path)
+            .inputFormat(fileExtension)
+            .output(tempLocalMP4File)
+            //Uncomment to see frame progress. Change to progress.percent to see bad % completed estimates
+            /*.on('progress', function(progress) {
+             console.log('Processing: ' + progress.frames + ' frames completed');
+            });*/
+            cmd = promisifyCommand(cmd)
+            return cmd.then(() => {
+                console.log('mp4 created at ', tempLocalMP4File)
+                //Just the upload left
+                return bucket.upload(tempLocalMP4File, {
+                    destination: MP4FilePath
+                }).then(() => {
+                    console.log('mp4 uploaded at', filePath);
+                    res.status(200).send(`0`)
+                });
+            })
+        });
+    });
+
 });
+
 
 /*
  * TODO: Start working up the requestor from firebase.
