@@ -11,8 +11,7 @@ const request = require('request-promise');
 exports.webm_to_mp4_requestor = functions.storage.object().onChange(event => {
     const object = event.data;
     const filePath = object.name;
-
-    console.log(filePath)
+    console.log(object.bucket)
 
     //Type Checking for the uploaded item
     if(object.contentType != 'video/webm'){

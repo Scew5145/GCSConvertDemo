@@ -31,7 +31,7 @@ app.get('/*.webm', (req, res) => {
     return mkdirp(tempLocalDir).then(() => {
         console.log('Directory Created')
         //Download item from bucket
-        const bucket = gcs.bucket(object.bucket);
+        const bucket = gcs.bucket('videoconvertgcdemo.appspot.com');
         return bucket.file(filePath).download({destination: tempLocalFile}).then(() => {
             console.log('file downloaded to convert. Location:', tempLocalFile)
             cmd = ffmpeg({source:tempLocalFile})
