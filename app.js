@@ -11,6 +11,14 @@ const app = express();
 const MP4_EXTENSION = 'mp4'
 const TEMP_LOCAL_FOLDER = '/tmp/'
 
+function promisifyCommand (command) {
+    return new Promise( (cb) => {
+        command
+        .on( 'end',   ()      => { cb(null)  } )
+        .on( 'error', (error) => { cb(error) } )
+        .run();
+    })
+}
 
 app.get('/*.webm', (req, res) => {
     console.log("Got a request!")
